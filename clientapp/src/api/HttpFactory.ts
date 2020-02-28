@@ -1,9 +1,9 @@
-import UserStorage from "../api/UserStorage"
+import UserStorage from "./UserStorage.ts"
 
 const repositories = {
     account: UserStorage,
 };
 
-export const HttpFactory = {
+export default {
     get: name => repositories[name]
 }; 

@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import HttpFactory from '../api/HttpFactory.ts'
+const UserStorage = HttpFactory.get('account')
 
 export default {
   name: 'HelloWorld',
@@ -39,6 +41,9 @@ export default {
     msg: String
   },
   methods: {
+    callMethod() {
+      UserStorage.get()
+    }
   }
 }
 </script>

@@ -26,31 +26,32 @@ namespace NAS.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        [Route("getMethod")]
+        public string getMethod()
         {
-            try
-            {
-                ViewBag.Message = "User already registered";
+            //try
+            //{
+            var test = "User already registered";
 
-                AppUser user = await UserMgr.FindByNameAsync("TestUser");
-                if(user == null)
-                {
-                    user = new AppUser();
-                    user.UserName = "TestUser";
-                    user.Email = "TestUser@test.com";
-                    user.FirstName = "Jhon";
-                    user.LastName = "Doe";
+            //    AppUser user = await UserMgr.FindByNameAsync("TestUser");
+            //    if(user == null)
+            //    {
+            //        user = new AppUser();
+            //        user.UserName = "TestUser";
+            //        user.Email = "TestUser@test.com";
+            //        user.FirstName = "Jhon";
+            //        user.LastName = "Doe";
 
-                    IdentityResult result = await UserMgr.CreateAsync(user, "Test123!");
-                    ViewBag.Message = "User was created";
-                }
-            }
-            catch(Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-            }
+            //        IdentityResult result = await UserMgr.CreateAsync(user, "Test123!");
+            //        ViewBag.Message = "User was created";
+            //    }
+            //}
+            //catch(Exception ex)
+            //{
+            //    ViewBag.Message = ex.Message;
+            //}
 
-            return View();
+            return test;
         }
         
         //[HttpPost]
