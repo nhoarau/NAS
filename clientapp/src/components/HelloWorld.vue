@@ -1,7 +1,6 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <button @click="call()">click</button>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -32,19 +31,10 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { HttpFactory } from '../api/HttpFactory'
-const UserStrorage = HttpFactory.get('account')
-
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
-  },
-  methods: {
-    async call() {
-      await UserStorage.get()
-    }
   }
 }
 </script>
