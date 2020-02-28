@@ -75,7 +75,7 @@ namespace NAS
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseVueCli(npmScript: "quasar");
+                    spa.UseVueCli(npmScript: "serve");
                 }
 
             });
