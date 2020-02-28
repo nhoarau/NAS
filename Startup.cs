@@ -54,7 +54,7 @@ namespace NAS
                 app.UseDeveloperExceptionPage();
             } else
             {
-                app.useHsts();
+                app.UseHsts();
             }
 
             app.UseRouting();

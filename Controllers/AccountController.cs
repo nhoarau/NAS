@@ -12,7 +12,7 @@ namespace NAS.Controllers
 {
     [ApiController]
     [Route("account")]
-    public class AccountController : ControllerBase
+    public class AccountController : Controller
     {
         private UserManager<AppUser> UserMgr { get; }
         private SignInManager<AppUser> SignInMgr { get; }
@@ -53,57 +53,57 @@ namespace NAS.Controllers
             return View();
         }
         
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(UserLoginModel userModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(userModel);
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Login(UserLoginModel userModel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(userModel);
+        //    }
 
-            var user = await UserMgr.FindByEmailAsync(userModel.Email);
-            if (user != null &&
-                await UserMgr.CheckPasswordAsync(user, userModel.Password))
-            {
-                var identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
-                identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+        //    var user = await UserMgr.FindByEmailAsync(userModel.Email);
+        //    if (user != null &&
+        //        await UserMgr.CheckPasswordAsync(user, userModel.Password))
+        //    {
+        //        var identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
+        //        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+        //        identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
 
-                await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme,
-                    new ClaimsPrincipal(identity));
+        //        await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme,
+        //            new ClaimsPrincipal(identity));
 
-                return RedirectToAction("", "Home");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Invalid UserName or Password");
-                return View();
-            }
-        }
+        //        return RedirectToAction("", "Home");
+        //    }
+        //    else
+        //    {
+        //        ModelState.AddModelError("", "Invalid UserName or Password");
+        //        return View();
+        //    }
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> Register( model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new AppUser { UserName = model.Username };
-                var result = await UserMgr.CreateAsync(user, model.Password);
+        //[HttpPost]
+        //public async Task<IActionResult> Register( model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = new AppUser { UserName = model.Username };
+        //        var result = await UserMgr.CreateAsync(user, model.Password);
 
-                if (result.Succeeded)
-                {
-                    await SignInMgr.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
-                }
-            }
-            return View();
-        }
+        //        if (result.Succeeded)
+        //        {
+        //            await SignInMgr.SignInAsync(user, false);
+        //            return RedirectToAction("Index", "Home");
+        //        }
+        //        else
+        //        {
+        //            foreach (var error in result.Errors)
+        //            {
+        //                ModelState.AddModelError("", error.Description);
+        //            }
+        //        }
+        //    }
+        //    return View();
+        //}
     }
 }

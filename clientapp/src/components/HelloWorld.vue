@@ -33,6 +33,8 @@
 
 <script>
 import axios from 'axios'
+import { HttpFactory } from '../api/HttpFactory'
+const UserStrorage = HttpFactory.get('account')
 
 export default {
   name: 'HelloWorld',
@@ -40,10 +42,8 @@ export default {
     msg: String
   },
   methods: {
-    call() {
-          axios.post('/account/login', )
-           
-      .then(response => (this.info = response))
+    async call() {
+      await UserStorage.get()
     }
   }
 }
