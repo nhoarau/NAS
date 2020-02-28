@@ -41,7 +41,8 @@ export default {
   },
   methods: {
     call() {
-       axios.get('/account')
+          axios.post('/account/login', )
+           
       .then(response => (this.info = response))
     }
   }

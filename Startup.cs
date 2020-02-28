@@ -52,6 +52,9 @@ namespace NAS
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            } else
+            {
+                app.useHsts();
             }
 
             app.UseRouting();
@@ -72,7 +75,7 @@ namespace NAS
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseVueCli(npmScript: "serve");
+                    spa.UseVueCli(npmScript: "quasar");
                 }
 
             });

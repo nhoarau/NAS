@@ -12,7 +12,7 @@ namespace NAS.Controllers
 {
     [ApiController]
     [Route("account")]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
         private UserManager<AppUser> UserMgr { get; }
         private SignInManager<AppUser> SignInMgr { get; }
@@ -52,7 +52,7 @@ namespace NAS.Controllers
 
             return View();
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLoginModel userModel)
