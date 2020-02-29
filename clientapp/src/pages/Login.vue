@@ -24,6 +24,11 @@ export default {
     redirect () {
       const UserStorage = HttpFactory.post('account')
       UserStorage.post(this.login, this.password)
+        .then(response => {
+          if (response.data === true) {
+            this.$router.go({ name: 'main' })
+          }
+        })
     }
   },
   data () {
