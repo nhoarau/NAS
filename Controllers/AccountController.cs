@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NAS.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace NAS.Controllers
 {
     [ApiController]
     [Route("account")]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
         private UserManager<AppUser> UserMgr { get; }
         private SignInManager<AppUser> SignInMgr { get; }
@@ -27,61 +29,70 @@ namespace NAS.Controllers
 
         [HttpGet]
         [Route("getMethod")]
-        public string getMethod()
+        public async Task<string> getMethod()
         {
-            //try
-            //{
-            var test = "User already registered";
+            var Message = "";
+            try
+            {
+                Message = "User already registered";
 
-            //    AppUser user = await UserMgr.FindByNameAsync("TestUser");
-            //    if(user == null)
-            //    {
-            //        user = new AppUser();
-            //        user.UserName = "TestUser";
-            //        user.Email = "TestUser@test.com";
-            //        user.FirstName = "Jhon";
-            //        user.LastName = "Doe";
+                AppUser user = await UserMgr.FindByNameAsync("nhoarau");
+                if (user == null)
+                {
+                    user = new AppUser();
+                    user.UserName = "nhoarau";
+                    user.Email = "nathan.hoarau11@gmail.com";
+                    user.FirstName = "Nathan";
+                    user.LastName = "HOARAU";
 
-            //        IdentityResult result = await UserMgr.CreateAsync(user, "Test123!");
-            //        ViewBag.Message = "User was created";
-            //    }
-            //}
-            //catch(Exception ex)
-            //{
-            //    ViewBag.Message = ex.Message;
-            //}
+                    IdentityResult result = await UserMgr.CreateAsync(user, "PhilDougTest33*");
+                    Message = "User was created";
+                }
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+            }
 
-            return test;
+            return Message;
         }
-        
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Login(UserLoginModel userModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(userModel);
-        //    }
 
-        //    var user = await UserMgr.FindByEmailAsync(userModel.Email);
-        //    if (user != null &&
-        //        await UserMgr.CheckPasswordAsync(user, userModel.Password))
-        //    {
-        //        var identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
-        //        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
-        //        identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+        [HttpPost]
+        [Produces("application/json")]
+        [Route("login")]
+        public async Task<bool> Login(JObject userJson)
+        {
 
-        //        await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme,
-        //            new ClaimsPrincipal(identity));
+            var userInfo = JsonConvert.DeserializeObject<UserLoginModel>(userJson.ToString());
 
-        //        return RedirectToAction("", "Home");
-        //    }
-        //    else
-        //    {
-        //        ModelState.AddModelError("", "Invalid UserName or Password");
-        //        return View();
-        //    }
-        //}
+            if (!ModelState.IsValid)
+            {
+                return false;
+            }
+
+            var user = await UserMgr.FindByEmailAsync(userInfo.Email);
+            if (user != null &&
+                await UserMgr.CheckPasswordAsync(user, userInfo.Password))
+            {
+                var identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
+                identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+
+                await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme,
+                    new ClaimsPrincipal(identity));
+
+                return true;
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid UserName or Password");
+                return false;
+            }
+        }
+
+        private IActionResult View(UserLoginModel userModel)
+        {
+            throw new NotImplementedException();
+        }
 
         //[HttpPost]
         //public async Task<IActionResult> Register( model)

@@ -31,7 +31,6 @@ namespace NAS
             {
                 options.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<IdentityAppContext>();
-
             services.AddEntityFrameworkNpgsql().AddDbContext<IdentityAppContext>(opt =>
             {
                 opt.UseNpgsql(Configuration.GetConnectionString("WebApiConnection"));
@@ -44,6 +43,7 @@ namespace NAS
             });
             services.AddMvcCore()
     .AddApiExplorer();
+            services.AddMvcCore().AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,7 +75,7 @@ namespace NAS
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseVueCli(npmScript: "serve");
+                    spa.UseVueCli(npmScript: "quasar");
                 }
 
             });

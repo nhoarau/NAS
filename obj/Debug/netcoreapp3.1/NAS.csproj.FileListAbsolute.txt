@@ -120,6 +120,10 @@ C:\Repos\NAS\bin\Debug\netcoreapp3.1\ru\Microsoft.CodeAnalysis.Workspaces.resour
 C:\Repos\NAS\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Repos\NAS\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Repos\NAS\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Repos\NAS\obj\Debug\netcoreapp3.1\NAS.csprojAssemblyReference.cache
+C:\Repos\NAS\bin\Debug\netcoreapp3.1\clientapp\jsconfig.json
+C:\Repos\NAS\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\Repos\NAS\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Repos\NAS\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Repos\NAS\obj\Debug\netcoreapp3.1\NAS.MvcApplicationPartsAssemblyInfo.cs
 C:\Repos\NAS\obj\Debug\netcoreapp3.1\NAS.MvcApplicationPartsAssemblyInfo.cache
-C:\Repos\NAS\obj\Debug\netcoreapp3.1\NAS.csprojAssemblyReference.cache
