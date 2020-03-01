@@ -13,6 +13,12 @@ export default {
   props: {
     cheminGobal: Object
   },
+  data () {
+    return {
+      visible: true,
+      simple: []
+    }
+  },
   methods: {
     redirect () {
       const TreeStorage = HttpFactory.get('tree')
@@ -20,7 +26,9 @@ export default {
         .then(response => {
           let chemin = this.cheminGobal
           chemin = response.data
-          console.log(chemin)
+          this.simple = []
+          this.simple = chemin
+          console.log(this.simple)
         })
     }
   }
