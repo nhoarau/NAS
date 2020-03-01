@@ -1,7 +1,9 @@
 import UserStorage from './UserStorage'
+import TreeStorage from './TreeStorage'
 
 const repositories = {
-  account: UserStorage
+  account: UserStorage,
+  tree: TreeStorage
 }
 
 export default {

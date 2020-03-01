@@ -26,11 +26,8 @@ export default {
         .then(response => {
           if (response.data === true) {
             this.$q.sessionStorage.set('isAuth', true)
-            console.log(this.$isAuth)
             this.$isAuth = true
-            console.log(this.$isAuth)
             this.$router.push({ name: 'main' })
-            console.log(response)
           }
         })
     }
