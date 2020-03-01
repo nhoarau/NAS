@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -62,7 +63,6 @@ namespace NAS.Controllers
         [Route("login")]
         public async Task<bool> Login(JObject userJson)
         {
-
             var userInfo = JsonConvert.DeserializeObject<UserLoginModel>(userJson.ToString());
 
             if (!ModelState.IsValid)

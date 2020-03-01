@@ -1,6 +1,5 @@
 <template>
     <div id="login" class="q-gutter-xs column fixed-center">
-        <h5> {{ login }} {{ password }} </h5>
         <q-input v-model="login" filled type="text" hint="Login">
             <template v-slot:prepend>
                 <q-icon name="pets" />
@@ -26,7 +25,12 @@ export default {
       UserStorage.post(this.login, this.password)
         .then(response => {
           if (response.data === true) {
-            this.$router.go({ name: 'main' })
+            this.$q.sessionStorage.set('isAuth', true)
+            console.log(this.$isAuth)
+            this.$isAuth = true
+            console.log(this.$isAuth)
+            this.$router.push({ name: 'main' })
+            console.log(response)
           }
         })
     }

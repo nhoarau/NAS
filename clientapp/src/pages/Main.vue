@@ -1,5 +1,7 @@
 <template>
-    <div><h1>main</h1></div>
+    <q-page padding>
+      <h1>OULA</h1>
+    </q-page>
 </template>
 
 <script>
