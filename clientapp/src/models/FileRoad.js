@@ -1,5 +1,5 @@
-function FileRoad (Libelle, Files, Subfolder) {
-  this.Libelle = Libelle
-  this.Files = Files
-  this.Subfolder = Subfolder
+export default class FileRoad {
+    libelle
+    files
+    subfolder
 }
