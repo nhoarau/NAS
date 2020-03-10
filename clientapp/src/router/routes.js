@@ -4,7 +4,9 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { name: 'login', path: '/login', component: () => import('pages/Login.vue') },
-      { name: 'main', path: '/main', component: () => import('pages/Main.vue'), meta: { requiresAuth: true } }
+      { name: 'main', path: '/main', component: () => import('pages/Main.vue') },
+      // { name: 'main', path: '/main', component: () => import('pages/Main.vue'), meta: { requiresAuth: true } },
+      { name: 'sideBar', path: '/sideBar', component: () => import('components/SideBar.vue') }
     ]
   }
 ]

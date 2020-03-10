@@ -4,14 +4,6 @@ import routes from './routes'
 import { SessionStorage } from 'quasar'
 
 Vue.use(VueRouter)
-/*
- * If not building with SSR mode, you can
- * directly export the Router instantiation;
- *
- * The function below can be async too; either use
- * async/await or return a Promise which resolves
- * with the Router instance.
- */
 
 const Router = new VueRouter({
   mode: 'history',
@@ -19,6 +11,8 @@ const Router = new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
   routes
 })
+
+// Declaration du SessionStorage qui sera accessible dans toute l'appli
 SessionStorage.set('isAuth', false)
 
 Router.beforeEach((to, from, next) => {
