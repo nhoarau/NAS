@@ -13,48 +13,91 @@ namespace NAS.Controllers
     [ApiController]
     public class TreeController : ControllerBase
     {
+        // [HttpGet]
+        // [Route("getTree")]
+        // public FileRoad getTree()
+        // {
+        //     string root = @"C:\Repos\aa";
+        //     var folder = new FileRoad(root);
+
+        //     var cheminGlobal = GetDirectories(root, folder);
+        //     return cheminGlobal;
+        // }
+
+        // public List<Models.File> GetFiles(string path)
+        // {
+        //     string[] subfiles = Directory.GetFiles(path);
+        //     List<Models.File> listFiles = new List<Models.File>();
+        //     foreach (string sub in subfiles)
+        //     {
+        //         if (sub.LastIndexOf('.') > 0)
+        //         {
+        //             string lastWord = sub.Split('\\').Last();
+        //             var extention = sub.Substring(sub.LastIndexOf('.') + 1);
+        //             listFiles.Add(new Models.File(lastWord, extention));
+        //         }
+        //     }
+        //     return listFiles;
+        // }
+
+        // public FileRoad GetDirectories(string path, FileRoad road)
+        // {
+        //     string[] subdirectoryEntries = Directory.GetDirectories(path);
+        //     road.Files = GetFiles(path);
+
+        //     foreach (string subD in subdirectoryEntries)
+        //     {
+        //         string lastWord = subD.Split('\\').Last();
+        //         var newDirectorie = new FileRoad(lastWord);
+        //         road.Subfolder.Add(GetDirectories(subD, newDirectorie));
+
+        //     }
+
+        //     return road;
+        // }
+
         [HttpGet]
         [Route("getTree")]
-        public FileRoad getTree()
+        public ActionResult getTree(string path)
         {
-            string root = @"C:\Repos\aa";
-            var folder = new FileRoad(root);
+            if (!System.IO.Directory.Exists(path))
+                return NotFound();
 
-            var cheminGlobal = GetDirectories(root, folder);
-            return cheminGlobal;
-        }
-
-        public List<Models.File> GetFiles(string path)
-        {
-            string[] subfiles = Directory.GetFiles(path);
-            List<Models.File> listFiles = new List<Models.File>();
-            foreach (string sub in subfiles)
-            {
-                if (sub.LastIndexOf('.') > 0)
+            var name = System.IO.Path.GetDirectoryName(path);
+            var files = System.IO.Directory.GetFiles(path)
+                .Select(f => new Models.File
                 {
-                    string lastWord = sub.Split('\\').Last();
-                    var extention = sub.Substring(sub.LastIndexOf('.') + 1);
-                    listFiles.Add(new Models.File(lastWord, extention));
-                }
-            }
-            return listFiles;
-        }
+                    Name = System.IO.Path.GetFileName(f),
+                    Url = f
+                }).ToList();
+            var subDirectories = System.IO.Directory.GetDirectories(path)
+                .Select(d => new SubDirectory
+                {
+                    Name = System.IO.Path.GetFileName(d),
+                    Url = d + "\\"
+                })
+                .ToList();
 
-        public FileRoad GetDirectories(string path, FileRoad road)
-        {
-            string[] subdirectoryEntries = Directory.GetDirectories(path);
-            road.Files = GetFiles(path);
-
-            foreach (string subD in subdirectoryEntries)
+            var directory = new Models.Directory
             {
-                string lastWord = subD.Split('\\').Last();
-                var newDirectorie = new FileRoad(lastWord);
-                road.Subfolder.Add(GetDirectories(subD, newDirectorie));
-                
-            }
+                Name = name,
+                Files = files,
+                SubDirectories = subDirectories
+            };
 
-            return road;
+            return Ok(directory);
         }
 
+        [HttpGet]
+        [Route("downloadFile")]
+        public bool getFile(string path, string fileName)
+        {
+            using (var client = new System.Net.WebClient())
+            {
+                Uri fileUri = new Uri(fileName);
+                client.DownloadFile(fileUri, "fileNametest.txt");
+            }
+            return true;
+        }
     }
 }
