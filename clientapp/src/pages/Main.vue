@@ -53,11 +53,28 @@ export default {
     },
 
     getFile (url, fileName) {
+      const FileSaver = require('file-saver')
       console.log('getFile method')
       const TreeStorage = HttpFactory.get('tree')
-      TreeStorage.getFile(url, fileName)
+      TreeStorage.getFile(url)
         .then(response => {
-          console.log(response.data)
+          // console.log(response)
+          // var fileURL = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
+          // var fileLink = document.createElement('a')
+          // fileLink.href = fileURL
+          // fileLink.setAttribute('download', fileName)
+          // document.body.appendChild(fileLink)
+          // fileLink.click()
+          // FileDownload(response.data, fileName)
+          var fileNameHeader = 'x-suggested-filename'
+          var suggestedFileName = response.headers[fileNameHeader]
+          var effectiveFileName = (suggestedFileName === undefined
+            ? 'allergierOchPreferenser.xls'
+            : suggestedFileName)
+          console.log('Received header [' + fileNameHeader + ']: ' + suggestedFileName + ', effective fileName: ' + effectiveFileName)
+
+          // Let the user save the file.
+          FileSaver.saveAs(response.data, effectiveFileName)
         })
     },
 

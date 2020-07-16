@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -90,14 +91,37 @@ namespace NAS.Controllers
 
         [HttpGet]
         [Route("downloadFile")]
-        public bool getFile(string path, string fileName)
+        public async Task<IActionResult> getFile(string path)
         {
-            using (var client = new System.Net.WebClient())
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
             {
-                Uri fileUri = new Uri(fileName);
-                client.DownloadFile(fileUri, "fileNametest.txt");
+                await stream.CopyToAsync(memory);
             }
-            return true;
+            memory.Position = 0;
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+
+            return File(memory, GetType()[ext], Path.GetFileName(path));
         }
+
+
+        private Dictionary<string, string> GetType()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain" },
+                {".pdf", "application/pdf" },
+                {".doc", "application/vnd.ms-word" },
+                {".docx", "application/vnd.ms-word" },
+                {".xls", "application/vnd.ms-excel" },
+                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
+                {".png", "image/png" },
+                {".jpg", "image/jpeg" },
+                {".jpeg", "image/jpeg" },
+                {".gif", "image/gif" },
+                {".csv", "text/csv" }
+            };
+        }
+
     }
 }

@@ -10,14 +10,14 @@
         "projectUniqueName": "C:\\Repos\\NAS\\NAS.csproj",
         "projectName": "NAS",
         "projectPath": "C:\\Repos\\NAS\\NAS.csproj",
-        "packagesPath": "C:\\Users\\nhoarau\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\natha\\.nuget\\packages\\",
         "outputPath": "C:\\Repos\\NAS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\nhoarau\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\natha\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
