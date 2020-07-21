@@ -6,7 +6,9 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using NAS.Models;
+using NAS.Services;
 
 namespace NAS.Controllers
 {
@@ -90,8 +92,8 @@ namespace NAS.Controllers
         }
 
         [HttpGet]
-        [Route("downloadFile")]
-        public async Task<IActionResult> getFile(string path)
+        [Route("downloadFile")] 
+        public async Task<IActionResult> getFile(string path, string fileName)
         {
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))
@@ -104,6 +106,24 @@ namespace NAS.Controllers
             return File(memory, GetType()[ext], Path.GetFileName(path));
         }
 
+        [HttpPost]
+        [Route("uploadFile")]
+        public async Task<IActionResult> UploadFile(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return Content("file not selected");
+
+            var path = Path.Combine(
+                        System.IO.Directory.GetCurrentDirectory(),
+                        file.FileName);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return Ok(path);
+        }
 
         private Dictionary<string, string> GetType()
         {

@@ -35,7 +35,7 @@ namespace NAS
             {
                 opt.UseNpgsql(Configuration.GetConnectionString("WebApiConnection"));
             });
-
+           
             services.AddControllers();
             services.AddSpaStaticFiles(configuration =>
             {
