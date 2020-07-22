@@ -158,8 +158,8 @@ h6 {
 
 .glossy {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  top: 2em;
+  left: 2em;
 }
 #container {
   margin: 2em;
@@ -168,7 +168,9 @@ h6 {
 .upload {
   display: flex;
   flex-direction: row-reverse;
-
 }
 
+body.body--dark {
+  background: #000
+}
 </style>
